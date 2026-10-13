@@ -1,0 +1,33 @@
+# Скопируйте файл в terraform.tfvars и укажите свои данные.
+# Файл terraform.tfvars не добавляется в Git.
+
+# Выберите облако: cloudru или yandex
+cloud_provider = "cloudru"
+
+# Настройки Cloud.ru
+cloudru_project_id  = "УКАЖИТЕ_ID_ПРОЕКТА"
+cloudru_auth_key_id = "УКАЖИТЕ_ID_КЛЮЧА"
+cloudru_auth_secret = "УКАЖИТЕ_СЕКРЕТНЫЙ_КЛЮЧ"
+
+# Публичный SSH-ключ
+ssh_public_key = "ВСТАВЬТЕ_ПУБЛИЧНЫЙ_SSH_КЛЮЧ"
+
+# Настройки Yandex Cloud
+cloud_id                 = "УКАЖИТЕ_ID_ОБЛАКА"
+folder_id                = "УКАЖИТЕ_ID_КАТАЛОГА"
+service_account_key_file = "/путь/к/файлу-ключа.json"
+
+# Один master и три worker используются по умолчанию.
+# Значение worker_count можно изменить от 1 до 4, если хватает квоты.
+worker_count = 3
+
+# При необходимости укажите значения ниже. Иначе оставьте строки закомментированными.
+# cloudru_zone     = "ru.AZ-1"
+# flavor           = "gen-2-4"
+# vm_user          = "ubuntu"
+# project_name     = "k8s-homework"
+# vm_image_name    = "ubuntu-22.04"
+# disk_size        = 20
+# disk_type_name   = "SSD"
+# default_zone     = "ru-central1-a"
+# vm_image_family  = "ubuntu-2004-lts"

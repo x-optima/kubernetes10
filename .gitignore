@@ -1,0 +1,32 @@
+
+#Terraform
+terraform/.terraform/
+terraform/terraform.tfstate.d/
+terraform/*.tfvars
+terraform/*.tfvars.json
+terraform/*.tfstate*
+terraform/*.tfplan
+terraform/crash.log
+terraform/override.tf
+terraform/override_*.tf
+
+# Исключения для примеров
+!terraform/*.tfvars.example
+
+#Сгенерированные файлы
+ansible/inventory.yaml
+ansible/.kubespray*/
+ansible/.venv-kubespray/
+
+#Системные
+*.log
+*.tmp
+.idea/
+.vscode/
+.env
+*.pem
+*.key
+
+
+#Заметки
+LONGRID.md

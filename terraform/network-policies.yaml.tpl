@@ -1,5 +1,7 @@
 # manifests/network-policies.yaml
+
 # Сетевые политики для изоляции: frontend -> backend -> cache
+# Сгенерировано Terraform из terraform/network-policies.yaml.tpl
 
 ---
 # 1. Default deny all ingress (изоляция namespace app)
@@ -35,6 +37,7 @@ spec:
   policyTypes:
     - Egress
   egress:
+    # Разрешаем DNS к CoreDNS (внутренний кластерный DNS)
     - to:
         - namespaceSelector:
             matchLabels:
@@ -42,6 +45,15 @@ spec:
           podSelector:
             matchLabels:
               k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # Разрешаем DNS к node-local-dns (link-local адрес)
+    - to:
+        - ipBlock:
+            cidr: ${NODELOCALDNS_IP}/32
       ports:
         - protocol: UDP
           port: 53

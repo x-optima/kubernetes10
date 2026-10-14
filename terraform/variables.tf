@@ -87,6 +87,12 @@ variable "disk_type_name" {
   description = "Тип диска: SSD или HDD"
 }
 
+variable "nodelocaldns_ip" {
+  type        = string
+  default     = "169.254.25.10"
+  description = "Link-local IP-адрес node-local-dns, используемый в качестве nameserver в подах (задаётся в Kubespray переменной nodelocaldns_ip)"
+}
+
 
 
 # --- Переменные Yandex Cloud (используются при cloud_provider = "yandex") ---

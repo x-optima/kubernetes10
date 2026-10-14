@@ -10,13 +10,16 @@ terraform/crash.log
 terraform/override.tf
 terraform/override_*.tf
 
-# Исключения для примеров
+# Исключения
 !terraform/*.tfvars.example
 
 #Сгенерированные файлы
 ansible/inventory.yaml
 ansible/.kubespray*/
 ansible/.venv-kubespray/
+
+# Манифест генерируется Terraform из terraform/network-policies.yaml.tpl
+manifests/network-policies.yaml
 
 #Системные
 *.log

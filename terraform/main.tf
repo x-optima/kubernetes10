@@ -225,3 +225,11 @@ resource "local_file" "ansible_inventory_yandex" {
   })
   filename = "${path.module}/../ansible/inventory.yaml"
 }
+
+# Генерация манифеста сетевых политик с IP node-local-dns (для обоих облаков)
+resource "local_file" "network_policies" {
+  content = templatefile("${path.module}/network-policies.yaml.tpl", {
+    NODELOCALDNS_IP = var.nodelocaldns_ip
+  })
+  filename = "${path.module}/../manifests/network-policies.yaml"
+}

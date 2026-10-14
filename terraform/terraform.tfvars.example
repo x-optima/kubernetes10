@@ -18,6 +18,8 @@ folder_id                = "УКАЖИТЕ_ID_КАТАЛОГА"
 service_account_key_file = "/путь/к/файлу-ключа.json"
 
 # Один master и три worker используются по умолчанию.
+# IP-адрес node-local-dns (link-local адрес для DNS, задаётся в Kubespray)
+# nodelocaldns_ip = "169.254.25.10"
 # Значение worker_count можно изменить от 1 до 4, если хватает квоты.
 worker_count = 3
 

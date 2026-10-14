@@ -120,15 +120,42 @@ eval "$(ssh-agent -s)" >/dev/null
 trap 'ssh-agent -k >/dev/null' EXIT
 ssh-add "$SSH_PRIVATE_KEY_PATH" >/dev/null
 
-echo "Проверка SSH-подключения"
+echo "Проверка SSH-подключения к master"
 if ! "${VENV_DIR}/bin/ansible" \
   -i "${INVENTORY_DIR}/hosts.yaml" \
-  all \
+  master \
   -m ansible.builtin.raw \
   -a true \
   --one-line \
+  --forks 1 \
   --private-key "$SSH_PRIVATE_KEY_PATH"; then
-  echo "Не удалось подключиться ко всем узлам. Проверьте адреса в inventory, SSH-ключ и доступ через master." >&2
+  echo "Не удалось подключиться к master. Проверьте SSH на master и адрес в inventory." >&2
+  exit 1
+fi
+
+echo "Проверка SSH-подключения к рабочим узлам"
+workers_ready=false
+for attempt in 1 2 3; do
+  if "${VENV_DIR}/bin/ansible" \
+    -i "${INVENTORY_DIR}/hosts.yaml" \
+    'worker-*' \
+    -m ansible.builtin.raw \
+    -a true \
+    --one-line \
+    --forks 1 \
+    --private-key "$SSH_PRIVATE_KEY_PATH"; then
+    workers_ready=true
+    break
+  fi
+
+  if [[ "$attempt" -lt 3 ]]; then
+    echo "Рабочие узлы пока недоступны; повторная проверка через 10 секунд (${attempt}/3)."
+    sleep 10
+  fi
+done
+
+if [[ "$workers_ready" != true ]]; then
+  echo "Не удалось подключиться к рабочим узлам. Проверьте SSH-доступ через master и доступность worker-узлов." >&2
   exit 1
 fi
 
